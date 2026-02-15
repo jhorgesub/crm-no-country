@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Backend Application",
+            "request": "launch",
+            "mainClass": "com.nocountry.backend.BackendApplication",
+            "env": {
+                "MYSQL_ROOT_PASSWORD": "0314092",
+                "MYSQL_DATABASE": "crm-nocountry",
+                "MYSQL_USER": "Jorge",
+                "MYSQL_PASSWORD": "0314092",
+                "DB_URL": "jdbc:mysql://localhost:3306/crm-nocountry?serverTimezone=America/Argentina/Buenos_Aires&useSSL=false&allowPublicKeyRetrieval=true",
+                "DB_USERNAME": "Jorge",
+                "DB_PASSWORD": "0314092",
+                "NEXT_PUBLIC_API_URL": "http://localhost:8080/api",
+                "CORS_ALLOWED_ORIGINS": "http://localhost:3000",
+                "APP_COOKIE_SECURE": "false",
+                "WHATSAPP_API_BASE_URL": "https://graph.facebook.com/v19.0/9437",
+                "WHATSAPP_VERIFY_TOKEN": "EXAMPLE_TOKEN",
+                "WHATSAPP_API_TOKEN": "EAATZA2AaxOngBQAmkZArxRgyk",
+                "MAIL_IMAP_USERNAME": "subel.jorgeto@gmail.com",
+                "MAIL_IMAP_PASSWORD": "kiqm ehpg uxzd vpqj",
+                "MAIL_IMAP_HOST": "imap.gmail.com",
+                "MAIL_IMAP_PORT": "993"
+            }
+        }
+    ]
+}
