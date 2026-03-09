@@ -7,6 +7,9 @@ import com.nocountry.backend.enums.NotificationType;
 import com.nocountry.backend.enums.Stage;
 import com.nocountry.backend.events.LeadCreatedEvent;
 import com.nocountry.backend.repository.*;
+
+import jakarta.transaction.Transactional;
+
 import com.nocountry.backend.mappers.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +35,7 @@ public class CrmLeadService {
     private final UserRepository userRepository;
     private final ApplicationEventPublisher eventPublisher;
 
+    @Transactional
     public CrmLeadDTO create(CreateCrmLeadDTO dto) {
 
         if (crmLeadRepository.existsByEmailIgnoreCase(dto.email())) {
@@ -68,6 +72,7 @@ public class CrmLeadService {
         return crmLeadMapper.toDTO(lead);
     }
 
+    @Transactional
     public CrmLeadDTO update(Long id, UpdateCrmLeadDTO dto) {
         CrmLead crmLead = crmLeadRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Crm Lead not found"));
@@ -108,6 +113,7 @@ public class CrmLeadService {
         return crmLeadMapper.toDTO(saved);
     }
 
+    @Transactional
     public void delete(Long id) {
         CrmLead crmLead = crmLeadRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Crm Lead not found"));
@@ -164,16 +170,16 @@ public class CrmLeadService {
 
     private void detectChangesAndLog(CrmLead before, CrmLead after) {
 
-        System.out.println(">>> CHECKING STAGE CHANGE");
-        System.out.println("Before: " + before.getStage());
-        System.out.println("After: " + after.getStage());
+        log.info(">>> CHECKING STAGE CHANGE");
+        log.info("Before: {}", before.getStage());
+        log.info("After: {}", after.getStage());
 
         User owner = after.getOwner();
 
         if (owner != null) {
-            System.out.println("PREFS = " + owner.getPreferences());
+            log.info("PREFS = {}", owner.getPreferences());
             if (owner.getPreferences() != null) {
-                System.out.println("notifyStageChange = " + owner.getPreferences().isNotifyStageChange());
+                log.info("notifyStageChange = {}", owner.getPreferences().isNotifyStageChange());
             }
         }
 
@@ -219,9 +225,9 @@ public class CrmLeadService {
                         NotificationType.STAGE_CHANGE,
                         "Lead stage changed from " + before.getStage() + " to " + after.getStage());
 
-                System.out.println(">>> STAGE NOTIFICATION SENT");
+                log.info(">>> STAGE NOTIFICATION SENT");
             } else {
-                System.out.println(">>> NO STAGE NOTIFICATION – missing owner or prefs disabled");
+                log.info(">>> NO STAGE NOTIFICATION – missing owner or prefs disabled");
             }
         }
 

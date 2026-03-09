@@ -7,6 +7,7 @@ import com.nocountry.backend.dto.WeeklyMetricsDTO;
 import com.nocountry.backend.enums.Channel;
 import com.nocountry.backend.services.MessageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/messages/metrics")
 @RequiredArgsConstructor
+@Slf4j
 public class MessageMetricsController {
 
     private final MessageService messageService;
